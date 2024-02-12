@@ -15,6 +15,7 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
+    "coverage": "yarn test --coverage --watchAll --collectCoverageFrom='src/components/**/*.{js,jsx,ts,tsx}'",
     "eject": "react-scripts eject"
   },
   "eslintConfig": {
