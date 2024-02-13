@@ -1,4 +1,4 @@
-import React from "react";
+import React from 'react'
 
 const Greet = ({ name }) => {
   return (
@@ -7,6 +7,6 @@ const Greet = ({ name }) => {
       <p>{`Hello ${name}`}</p>
       <p>Hello World</p>
     </div>
-  );
-};
-export default Greet;
+  )
+}
+export default Greet
