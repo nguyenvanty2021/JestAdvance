@@ -1,4 +1,8 @@
-export const Application = () => {
+import React from 'react'
+
+export const Application = ({ todos, setTodos }) => {
+  const [count, setCount] = React.useState(0)
+  const [name, setName] = React.useState('')
   return (
     <>
       <h1>Job application form</h1>
@@ -16,6 +20,11 @@ export const Application = () => {
             placeholder="Fullname"
             value="Vishwas"
             onChange={() => {}}
+          />
+          <input
+            value={name}
+            onChange={(e) => setName(e.target.value)}
+            placeholder="input name"
           />
         </div>
         <div>
@@ -35,12 +44,19 @@ export const Application = () => {
         </div>
         <div>
           <label>
-            <input type="checkbox" id="terms" /> I agree to the terms and
-            conditions
+            <input
+              type="checkbox"
+              onChange={() => console.log('')}
+              id="terms"
+              checked={true}
+            />{' '}
+            I agree to the terms and conditions
           </label>
         </div>
         <button disabled>Submit</button>
       </form>
+      <button onClick={() => setCount(1)}>Increase Count</button>
+      <h3>{count}</h3>
     </>
   )
 }

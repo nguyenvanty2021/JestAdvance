@@ -18,6 +18,7 @@ const Counter = () => {
         onChange={(e) => setAmount(parseInt(e.target.value))}
       />
       <button onClick={() => setCounter(amount)}>Set</button>
+      <p data-testid="contentId">content ne</p>
     </div>
   )
 }

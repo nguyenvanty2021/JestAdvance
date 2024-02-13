@@ -1,5 +1,5 @@
 import { render, screen } from '@testing-library/react'
-import Greet from '.'
+import Greet, { handleSum } from '.'
 
 // Chú ý 1
 // có các đuôi file test như: .test.js, .test.jsx, .spec.js, .spec.jsx. Trường hợp dùng đuôi
@@ -9,9 +9,17 @@ import Greet from '.'
 
 // describe dùng để gôm nhóm test (nên dùng describe trong mỗi file test)
 describe('Greet', () => {
+  let component
+  beforeEach(() => {
+    component = <Greet name="Ty" />
+  })
+  // test func return
+  test('sum', () => {
+    expect(handleSum(1, 2)).toBe(3)
+  })
   // test text value
   test('Text value', () => {
-    render(<Greet />)
+    render(component)
     const textElementIsHello = screen.getByText('Hello')
     expect(textElementIsHello).toBeInTheDocument()
     const textElementIsHelloWorld = screen.getByText(/Hello World/i)
@@ -19,7 +27,7 @@ describe('Greet', () => {
   })
   // test props
   test('Props', () => {
-    render(<Greet name="Ty" />)
+    render(component)
     const textElementIsHelloTy = screen.getByText('Hello Ty')
     expect(textElementIsHelloTy).toBeInTheDocument()
   })

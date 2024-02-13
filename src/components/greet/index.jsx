@@ -1,5 +1,6 @@
 import React from 'react'
 
+export const handleSum = (a, b) => a + b
 const Greet = ({ name }) => {
   return (
     <div>

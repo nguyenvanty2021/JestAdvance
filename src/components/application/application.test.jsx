@@ -1,9 +1,14 @@
-import { render, screen } from '@testing-library/react'
+import { fireEvent, render, screen } from '@testing-library/react'
 import { Application } from '.'
 
+// beforeAll chỉ chạy một lần trước khi bắt đầu chạy tất cả các test cases
+// beforeEach có bao nhiêu test case thì beforeEach sẽ chạy bấy nhiêu lần (vẫn chạy trước mỗi test case nha)
+
+const mockFuncSetTodos = jest.fn()
 describe('Application', () => {
   test('has checkbox, input, button, select, header tag', () => {
-    render(<Application />)
+    // props của component này có truyền vào 1 state và 1 setState, nên mình cũng phải truyền vào, nếu không có data thì truyền default và 1 func rỗng
+    render(<Application todos={[]} setTodos={mockFuncSetTodos} />)
     // const hasInput = screen.getByRole("textbox", {
     //   name: "name",
     // }); // textbox is input
@@ -22,7 +27,11 @@ describe('Application', () => {
     expect(hasSelect).toBeInTheDocument()
     const hasCheckbox = screen.getByRole('checkbox')
     expect(hasCheckbox).toBeInTheDocument()
-    const hasButton = screen.getByRole('button')
+    // checkbox has value is true
+    expect(hasCheckbox).toBeChecked()
+    const hasButton = screen.getByRole('button', {
+      name: 'Submit',
+    })
     expect(hasButton).toBeInTheDocument()
     const hasTextName = screen.getByLabelText('Name') // same with screen.getByText
     // VD: input, textarea, select thì dùng: getByLabelText, mấy thẻ html, button thì dùng: getByText
@@ -36,6 +45,29 @@ describe('Application', () => {
     const hasButtonSubmit = screen.getByRole('button', {
       name: 'Submit',
     })
-    expect(hasButtonSubmit).not.toBeEnabled() // is button disabled
+    expect(hasButtonSubmit).toBeDisabled() // is button disabled
+    const hasInput = screen.getByPlaceholderText('Fullname')
+    expect(hasInput).toHaveAttribute('type', 'text') // <input type='text' value='Vishwas' />
+    expect(hasInput).toHaveValue('Vishwas')
+    const hasInputName = screen.getByPlaceholderText('input name')
+    // bắt onChange value input cách 2, cách 1 nằm ở folder components/counter
+    // onChange input value 'abc'
+    fireEvent.change(hasInputName, {
+      target: {
+        value: 'abc',
+      },
+    })
+    // input has value is 'abc'
+    expect(hasInputName.value).toBe('abc')
+    const hasButtonIncreaseCount = screen.getByRole('button', {
+      name: 'Increase Count',
+    })
+    fireEvent.click(hasButtonIncreaseCount)
+    const hasHeaderLevel3 = screen.getByRole('heading', {
+      level: 3,
+    })
+    expect(hasHeaderLevel3).toHaveTextContent('1')
+    // or
+    // expect(hasHeaderLevel3.textContent).toBe('1')
   })
 })
